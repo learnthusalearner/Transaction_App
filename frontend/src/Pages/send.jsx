@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Button } from "../Components/button";
 import { Inputbox } from "../Components/inputbox";
 import { SubHeading } from "../Components/subheading";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 const Send = () => {
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
     const name = searchParams.get("name");
@@ -20,7 +21,7 @@ const Send = () => {
     const handleTransfer = async () => {
         if (!amount || isNaN(amount) || amount <= 0) {
             setError('Please enter a valid amount.');
-            return;
+            return;z 
         }
 
         try {
@@ -35,6 +36,10 @@ const Send = () => {
 
             setSuccess('Transfer successful!');
             setError(false);
+            <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+                successful
+            </Alert>
+            navigate('/dashboard')
         } catch (error) {
             setError('Transfer failed.');
             setSuccess(false);
@@ -57,11 +62,11 @@ const Send = () => {
                         <h3 className="text-2xl font-semibold">{name}</h3>
                     </div>
                     <div className="flex flex-col justify-center">
-                        <Inputbox 
-                            onChange={handleAmountChange} 
-                            className="px-2 py-2 font-semibold" 
-                            name={"Amount (in Rs)"} 
-                            placeholder={"Enter amount"} 
+                        <Inputbox
+                            onChange={handleAmountChange}
+                            className="px-2 py-2 font-semibold"
+                            name={"Amount (in Rs)"}
+                            placeholder={"Enter amount"}
                             value={amount} // Ensure controlled input
                         />
                     </div>
